@@ -1,0 +1,18 @@
+# Backend build artifacts
+backend/build/
+backend/bin/
+*.o
+*.out
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local environment overrides
+.env
+*.local
+
+# Logs
+*.log

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SensorDataManager-C Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <h1>SensorDataManager-C</h1>
+      <p class="subtitle">Industrial sensor readings dashboard</p>
+    </div>
+    <div class="status-indicator" id="api-status">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Checking API...</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="card" id="submit-card">
+      <h2>Submit a Reading</h2>
+      <form id="reading-form">
+        <div class="form-grid">
+          <label>
+            Equipment
+            <select id="input-equipment" required></select>
+          </label>
+          <label>
+            Sensor type
+            <select id="input-sensor-type" required>
+              <option value="temperature">Temperature</option>
+              <option value="vibration">Vibration</option>
+              <option value="rotational_speed">Rotational speed</option>
+            </select>
+          </label>
+          <label>
+            Value
+            <input type="number" step="any" id="input-value" required placeholder="e.g. 62.5">
+          </label>
+          <label>
+            Unit (optional)
+            <input type="text" id="input-unit" placeholder="auto-filled from sensor type">
+          </label>
+          <label>
+            Recorded at (optional)
+            <input type="datetime-local" id="input-recorded-at" step="1">
+          </label>
+        </div>
+        <button type="submit">Submit reading</button>
+        <span id="submit-feedback" class="feedback"></span>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Readings</h2>
+      <div class="filters">
+        <label>
+          Equipment
+          <select id="filter-equipment">
+            <option value="">All</option>
+          </select>
+        </label>
+        <label>
+          Sensor type
+          <select id="filter-sensor-type">
+            <option value="">All</option>
+            <option value="temperature">Temperature</option>
+            <option value="vibration">Vibration</option>
+            <option value="rotational_speed">Rotational speed</option>
+          </select>
+        </label>
+        <label>
+          From
+          <input type="datetime-local" id="filter-from" step="1">
+        </label>
+        <label>
+          To
+          <input type="datetime-local" id="filter-to" step="1">
+        </label>
+        <label>
+          Limit
+          <input type="number" id="filter-limit" value="50" min="1" max="1000">
+        </label>
+        <button type="button" id="apply-filters">Apply filters</button>
+        <button type="button" id="refresh-readings" class="secondary">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table id="readings-table">
+          <thead>
+            <tr>
+              <th>Time (UTC)</th>
+              <th>Equipment</th>
+              <th>Sensor</th>
+              <th>Value</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody id="readings-body">
+            <tr><td colspan="5" class="empty-row">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Aggregate Statistics</h2>
+      <div class="filters">
+        <label>
+          Equipment
+          <select id="stats-filter-equipment">
+            <option value="">All</option>
+          </select>
+        </label>
+        <label>
+          Sensor type
+          <select id="stats-filter-sensor-type">
+            <option value="">All</option>
+            <option value="temperature">Temperature</option>
+            <option value="vibration">Vibration</option>
+            <option value="rotational_speed">Rotational speed</option>
+          </select>
+        </label>
+        <button type="button" id="apply-stats-filters">Apply filters</button>
+      </div>
+      <div class="table-wrap">
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>Equipment</th>
+              <th>Sensor</th>
+              <th>Average</th>
+              <th>Minimum</th>
+              <th>Maximum</th>
+              <th>Samples</th>
+            </tr>
+          </thead>
+          <tbody id="stats-body">
+            <tr><td colspan="6" class="empty-row">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>SensorDataManager-C &mdash; C backend, PostgreSQL storage, static HTML/JS dashboard.</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
